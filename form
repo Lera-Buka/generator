@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
+using DocumentFormat.OpenXml.CustomXmlDataProperties;
+using DocumentFormat.OpenXml.Packaging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace generate_doc
+{
+	public class generate_diary
+	{
+		public void GenerateDocument()
+		{
+			const string templateName = @"Template.docx";
+			const string resultDocumentName = @"PracticeDiary.docx";
+
+			var DiaryPractice = new DiaryPractice()
+			{
+				Name = "Lera Buka",
+				Date = new DateTime(2022, 04, 11),
+				Participants = new List<Participant>
+				{
+					new Lecturer { Name = "Valko N.V." }, 
+					new Lecturer { Name = "Kushnir N.O." }, 
+					new Lecturer { Name = "Shisko L.S." } 
+				},
+				faculty_data = new List<faculty_data>
+				{
+					new faculty_data { Faculty = "FKNFM" , Chair = "Department of Computer Science and Software Engineering", 
+						Direction = "application development", Course = "second"},
+
+					new faculty_data { Faculty = "FKNFM" , Chair = "Department of Physics", 
+						Direction = "process research", Course = "third"},
+				}
+			};
+
+			var serializer = new XmlSerializer(typeof(DiaryPractice));
+			var serializedDataStream = new MemoryStream();
+
+			var namespaces = new XmlSerializerNamespaces();
+			namespaces.Add("", "");
+
+			serializer.Serialize(serializedDataStream, diaryPractice, namespaces);
+			serializedDataStream.Seek(0, SeekOrigin.Begin);
+
+			File.Copy(templateName, resultDocumentName, true);
+
+			using (var document = WordprocessingDocument.Open(resultDocumentName, true))
+			{
+				var xmlpart = document.MainDocumentPart.CustomXmlParts
+					.Single(xmlPart =>
+						xmlPart.CustomXmlPropertiesPart.DataStoreItem.SchemaReferences.OfType<SchemaReference>()
+						.Any(sr => sr.Uri.Value == "urn:MeetingNotes"));
+
+				xmlpart.FeedData(serializedDataStream);
+			}
+
+
+		}
+	}
+}

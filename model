@@ -1,0 +1,45 @@
+[XmlRoot("DiaryPractice", Namespace = "urn:DiaryPractice")]
+public class DiaryPractice
+{
+    public DiaryPractice()
+    {
+        lecturer = new List<lecturer>();
+        faculty_data = new List<faculty_data>();
+    }
+ 
+    [XmlAttribute("name")]
+    public string Name { get; set; }
+ 
+    [XmlAttribute("date")]
+    public DateTime Date { get; set; }
+ 
+ 
+    [XmlArray("lecturer")]
+    public List<Lecturer> Lecturer { get; set; }
+ 
+    [XmlArray("faculty_data")]
+    public List<faculty_data> faculty_data { get; set; }
+}
+ 
+[XmlType("faculty_data")]
+public class Faculty_data
+{
+    [XmlAttribute("faculty")]
+    public string Faculty { get; set; }
+ 
+    [XmlAttribute("chair")]
+    public string Chair { get; set; }
+ 
+    [XmlAttribute("direction")]
+    public string Direction { get; set; }
+ 
+    [XmlAttribute("course")]
+    public string Course { get; set; }
+}
+ 
+[XmlType("lecturer")]
+public class Lecturer
+{
+    [XmlAttribute("name")]
+     public string Name { get; set; }
+}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 [XmlRoot("Diary", Namespace = "urn:Diary")]
-public class DiaryPractice
+public class Diary
 {
     public Diary()
     {

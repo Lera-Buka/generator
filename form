@@ -16,10 +16,10 @@ namespace generate_doc
 			const string templateName = @"Template.docx";
 			const string resultDocumentName = @"PracticeDiary.docx";
 
-			var DiaryPractice = new DiaryPractice()
+			var Diary = new Diary()
 			{
 				Name = "Lera Buka",
-				Date = new DateTime(2022, 04, 11),
+				Date = new DateTime(2022, 05, 11),
 				Participants = new List<Participant>
 				{
 					new Lecturer { Name = "Valko N.V." }, 

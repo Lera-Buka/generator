@@ -36,13 +36,13 @@ namespace generate_doc
 				}
 			};
 
-			var serializer = new XmlSerializer(typeof(DiaryPractice));
+			var serializer = new XmlSerializer(typeof(Diary));
 			var serializedDataStream = new MemoryStream();
 
 			var namespaces = new XmlSerializerNamespaces();
 			namespaces.Add("", "");
 
-			serializer.Serialize(serializedDataStream, diaryPractice, namespaces);
+			serializer.Serialize(serializedDataStream, diary, namespaces);
 			serializedDataStream.Seek(0, SeekOrigin.Begin);
 
 			File.Copy(templateName, resultDocumentName, true);
@@ -52,7 +52,7 @@ namespace generate_doc
 				var xmlpart = document.MainDocumentPart.CustomXmlParts
 					.Single(xmlPart =>
 						xmlPart.CustomXmlPropertiesPart.DataStoreItem.SchemaReferences.OfType<SchemaReference>()
-						.Any(sr => sr.Uri.Value == "urn:MeetingNotes"));
+						.Any(sr => sr.Uri.Value == "urn:Diary"));
 
 				xmlpart.FeedData(serializedDataStream);
 			}

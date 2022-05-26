@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-[XmlRoot("DiaryPractice", Namespace = "urn:DiaryPractice")]
+[XmlRoot("Diary", Namespace = "urn:Diary")]
 public class DiaryPractice
 {
-    public DiaryPractice()
+    public Diary()
     {
         lecturer = new List<lecturer>();
         faculty_data = new List<faculty_data>();
